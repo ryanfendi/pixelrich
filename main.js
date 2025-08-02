@@ -32,6 +32,13 @@ socket.on("updatePlayers", (serverPlayers) => {
 
 function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  // Gerakan dari joystick
+  currentPlayer.x += velocity.x;
+  currentPlayer.y += velocity.y;
+
+  socket.emit("move", currentPlayer);
+
   for (let id in players) {
     let p = players[id];
     let img = images[p.gender] || images.male;
@@ -78,4 +85,5 @@ joystickBase.addEventListener("touchend", () => {
   velocity.y = 0;
   joystickThumb.style.transform = `translate(0, 0)`;
 });
+
 
