@@ -1,0 +1,28 @@
+body {
+  margin: 0;
+  background: #111;
+  color: white;
+  font-family: monospace;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#gameCanvas {
+  border: 2px solid white;
+  background: url('assets/bg.png') repeat;
+}
+#chatBox {
+  margin-top: 10px;
+}
+#messages {
+  width: 640px;
+  height: 100px;
+  overflow-y: auto;
+  background: #222;
+  padding: 5px;
+}
+#chatInput {
+  width: 640px;
+  padding: 8px;
+  font-size: 16px;
+}
