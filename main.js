@@ -32,21 +32,25 @@ socket.on("updatePlayers", (serverPlayers) => {
 
 function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  
-  // Gerakan dari joystick
-  currentPlayer.x += velocity.x;
-  currentPlayer.y += velocity.y;
 
+  // Update posisi berdasarkan joystick
+  currentPlayer.x += joystick.velocity.x;
+  currentPlayer.y += joystick.velocity.y;
+
+  // Kirim posisi ke server
   socket.emit("move", currentPlayer);
 
+  // Gambar semua pemain
   for (let id in players) {
     let p = players[id];
     let img = images[p.gender] || images.male;
-    ctx.drawImage(img, p.x, p.y, 32, 32);
+    if (img.complete) {
+      ctx.drawImage(img, p.x, p.y, 32, 32);
+    }
   }
+
   requestAnimationFrame(gameLoop);
 }
-
 gameLoop();
 
 const joystickBase = document.getElementById("joystickBase");
@@ -125,5 +129,6 @@ joystickBase.addEventListener("touchend", () => {
   joystick.velocity.y = 0;
   joystickThumb.style.transform = `translate(0px, 0px)`;
 });
+
 
 
