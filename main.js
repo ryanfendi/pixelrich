@@ -1,15 +1,40 @@
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+const socket = io("https://NAMA-REPLIT.repl.co"); // Ganti sesuai server kamu
+
+const images = {
+  male: new Image(),
+  female: new Image(),
+};
+images.male.src = 'assets/player_male.png';
+images.female.src = 'assets/player_female.png';
+
+let currentPlayer = {
+  x: 100,
+  y: 100,
+  gender: prompt("Pilih gender: male / female")?.toLowerCase() === "female" ? "female" : "male",
+};
+
+socket.emit("newPlayer", currentPlayer);
+
+let players = {};
+
+
 let velocity = { x: 0, y: 0 };
 
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const socket = io("https://1c3cca08-8104-423a-bed7-e7ce5f3adbcb-00-2brvmohad4s73.pike.replit.dev/");
 
+socket.emit("newPlayer", currentPlayer);
+
 let players = {};
 let currentPlayer = {
   x: 100,
   y: 100,
-  gender: prompt("Pilih gender: male / female") || "male",
+  gender: prompt("Pilih gender: male / female")?.toLowerCase() === "female" ? "female" : "male",
 };
+
 
 const images = {
   male: new Image(),
@@ -129,6 +154,7 @@ joystickBase.addEventListener("touchend", () => {
   joystick.velocity.y = 0;
   joystickThumb.style.transform = `translate(0px, 0px)`;
 });
+
 
 
 
