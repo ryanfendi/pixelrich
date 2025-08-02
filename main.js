@@ -86,4 +86,44 @@ joystickBase.addEventListener("touchend", () => {
   joystickThumb.style.transform = `translate(0, 0)`;
 });
 
+let joystick = {
+  dragging: false,
+  origin: { x: 0, y: 0 },
+  velocity: { x: 0, y: 0 },
+};
+
+const joystickBase = document.getElementById("joystickBase");
+const joystickThumb = document.getElementById("joystickThumb");
+
+joystickBase.addEventListener("touchstart", (e) => {
+  joystick.dragging = true;
+  const touch = e.touches[0];
+  joystick.origin.x = touch.clientX;
+  joystick.origin.y = touch.clientY;
+});
+
+joystickBase.addEventListener("touchmove", (e) => {
+  if (!joystick.dragging) return;
+
+  const touch = e.touches[0];
+  const dx = touch.clientX - joystick.origin.x;
+  const dy = touch.clientY - joystick.origin.y;
+  const dist = Math.min(40, Math.sqrt(dx * dx + dy * dy));
+  const angle = Math.atan2(dy, dx);
+
+  const x = Math.cos(angle) * dist;
+  const y = Math.sin(angle) * dist;
+
+  joystickThumb.style.transform = `translate(${x}px, ${y}px)`;
+  joystick.velocity.x = x / 5;
+  joystick.velocity.y = y / 5;
+});
+
+joystickBase.addEventListener("touchend", () => {
+  joystick.dragging = false;
+  joystick.velocity.x = 0;
+  joystick.velocity.y = 0;
+  joystickThumb.style.transform = `translate(0px, 0px)`;
+});
+
 
