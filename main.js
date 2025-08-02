@@ -63,3 +63,6 @@ function gameLoop() {
 }
 
 gameLoop(); // Jalankan loop
+
+images.male.onload = () => console.log("Male image loaded");
+images.female.onload = () => console.log("Female image loaded");
