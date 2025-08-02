@@ -57,3 +57,33 @@ body {
   font-size: 16px;
 }
 
+#joystickContainer {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 100px;
+  height: 100px;
+  z-index: 10;
+  touch-action: none;
+}
+
+#joystickBase {
+  width: 100px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid white;
+  border-radius: 50%;
+  position: relative;
+}
+
+#joystickThumb {
+  width: 40px;
+  height: 40px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  transition: 0.05s;
+}
+
