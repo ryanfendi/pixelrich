@@ -183,6 +183,34 @@ joystickBase.addEventListener("touchend", () => {
   joystickThumb.style.transform = `translate(0px, 0px)`;
 });
 
+socket.on("updatePlayers", (serverPlayers) => {
+  players = serverPlayers;
+});
+
+function gameLoop() {
+  if (!currentPlayer) return requestAnimationFrame(gameLoop);
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // joystick atau keyboard movement (jika ada)
+  currentPlayer.x += joystick.velocity.x;
+  currentPlayer.y += joystick.velocity.y;
+
+  socket.emit("move", currentPlayer);
+
+  for (let id in players) {
+    let p = players[id];
+    let img = images[p.gender] || images.male;
+    if (img.complete && img.naturalHeight !== 0) {
+      ctx.drawImage(img, p.x, p.y, 32, 32);
+    }
+  }
+
+  requestAnimationFrame(gameLoop);
+}
+
+gameLoop();
+
 
 
 
