@@ -1,3 +1,31 @@
+let socket = io("https://NAMA-REPLIT.repl.co"); // Ganti sesuai server kamu
+let canvas = document.getElementById('gameCanvas');
+let ctx = canvas.getContext('2d');
+
+let currentPlayer = null;
+let players = {};
+
+const images = {
+  male: new Image(),
+  female: new Image(),
+};
+images.male.src = 'assets/player_male.png';
+images.female.src = 'assets/player_female.png';
+
+function selectGender(gender) {
+  document.getElementById('genderSelector').style.display = 'none';
+  canvas.style.display = 'block';
+  document.getElementById('chatBox').style.display = 'block';
+
+  currentPlayer = {
+    x: 100,
+    y: 100,
+    gender: gender,
+  };
+
+  socket.emit("newPlayer", currentPlayer);
+}
+
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const socket = io("https://NAMA-REPLIT.repl.co"); // Ganti sesuai server kamu
@@ -154,6 +182,7 @@ joystickBase.addEventListener("touchend", () => {
   joystick.velocity.y = 0;
   joystickThumb.style.transform = `translate(0px, 0px)`;
 });
+
 
 
 
